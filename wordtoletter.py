@@ -36,6 +36,7 @@ def getLetters(imagepath):
             (tH, tW) = thresh.shape
             dX = int(max(0, 32 - tW) / 2.0)
             dY = int(max(0, 32 - tH) / 2.0)
+            cv2.rectangle(image, (x, y), (x + w, y+h), 1)
 
             padded = cv2.copyMakeBorder(thresh, top=dY, bottom=dY,
                                         left=dX, right=dX, borderType=cv2.BORDER_CONSTANT,
@@ -46,6 +47,8 @@ def getLetters(imagepath):
             padded = np.expand_dims(padded, axis=-1)
 
             chars.append((padded, (x, y, w, h)))
+    cv2.imshow("Image", image)
+    cv2.waitKey(0)
 
     boxes = [b[1] for b in chars]
     count = 0
